@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="{{ ajax_task_base_url() }}/css/app.css">
+    <link rel="stylesheet" href="{{ ajax_task_base_url() }}/css/bootstrap.css">
+    <link rel="stylesheet" href="{{ ajax_task_base_url() }}/css/bootstrap-theme.css">
+    <script type="text/javascript" src="{{ ajax_task_base_url() }}/js/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+{% block login %}
+    <div class="top-line container">
+        {% if not ajax_task_is_user_logged() %}
+            <a href="{{ ajax_task_base_url() }}/login" class="btn btn-info">Login</a>
+        {% else %}
+            <a href="{{ ajax_task_base_url() }}/logout" class="btn btn-danger">Logout</a>
+        {%  endif %}
+    </div>
+{% endblock %}
+{% block body %}{% endblock %}
+</body>
+</html>

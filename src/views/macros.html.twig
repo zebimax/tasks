@@ -1,0 +1,28 @@
+{% macro renderSortButton(text, value) %}
+    {% set param = {key: 'sort', value: value} %}
+    <a href="{{ ajax_task_url(param, true) }}" class="btn btn-default">{{ text|raw }}</a>
+{% endmacro %}
+{% macro renderPaginationButton(text, value) %}
+    {% set param = {key: 'page', value: value} %}
+    <a href="{{ ajax_task_url(param) }}">{{ text|raw }}</a>
+{% endmacro %}
+{% macro renderTaskPicture(task) %}
+    {% if task.picture %}
+        {% set src = ajax_task_base_url() ~ '/pictures/' ~ task.picture %}
+        <img src="{{ src }}" alt="{{ task.username }}">
+    {% endif %}
+{% endmacro %}
+{% macro renderEditTaskLink(task) %}
+    {% if ajax_task_is_user_logged() %}
+        {% set updateUrl = ajax_task_base_url() ~ '/task/update/' ~ task.id %}
+        <a href="{{ updateUrl }}" class="btn btn-primary">Edit task</a>
+    {% endif %}
+{% endmacro %}
+{% macro renderStatusIcon(task) %}
+    {% if  task.status == 'new' %}
+        {% set img = 'new.png'%}
+    {% else %}
+        {% set img = 'completed.png'%}
+    {% endif %}
+    <img src="{{ ajax_task_base_url() ~ '/img/' ~ img }}" width="20px">
+{% endmacro %}

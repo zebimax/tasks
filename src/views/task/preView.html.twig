@@ -1,0 +1,13 @@
+<div class="row description-task">
+    <div class="col-md-8">
+            <div>{{ macros.renderStatusIcon(task) }}<p class="task-username">{{ task.username }}</p>{{ task.email }}</div>
+            <div>{{ task.description }}</div>
+    </div>
+    <div class="col-md-4 text-right">
+        <div class="task-thumbnail">
+            {% if task.pictureContent %}
+                <img src="{{ task.pictureContent }}" alt="">
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block title %}Update Task{% endblock %}
+{% block body %}
+    <div class="container">
+        <h2>Update Task</h2>
+        <div class="row margin-bottom20 border-bottom">
+            <div class="col-md-10"></div>
+            <div class="col-md-2 text-right">
+                <a href="{{ ajax_task_base_url() }}/" class="btn btn-primary">Tasks List</a>
+            </div>
+        </div>
+        <div class="row margin-bottom20 border-bottom">
+            <div class="col-md-6 col-md-offset-3">
+                <div><p class="task-username">{{ task.username }}</p>{{ task.email }}</div>
+                <form id="task-update-form" action="{{ ajax_task_base_url() }}/task/update/{{ task.id }}" enctype="multipart/form-data" method="post">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" name="description" placeholder="Description.."
+                              style="height:200px;resize: none;">{{ task.description }}</textarea>
+                    <br>
+                    {% if task.status == 'completed' %}
+                        {% set statusChecked = 'checked="checked"' %}
+                    {% else %}
+                        {% set statusChecked = '' %}
+                    {% endif %}
+                    <label for="status">Completed</label>
+                    <input class="" id="status" name="status" type="checkbox" value="completed" {{ statusChecked }}>
+                    <br>
+                    <input class="btn btn-success" type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{
+    "name": "ajax/tasks",
+    "description": "Simple Tasks Manager App",
+    "require": {
+        "twig/twig": "*",
+        "nikic/fast-route": "^1.2",
+        "gumlet/php-image-resize": "^1.8"
+    },
+    "autoload": {
+        "psr-4": {
+          "Ajax\\Tasks\\": "src/"
+        }
+    }
+}

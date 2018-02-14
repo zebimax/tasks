@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block title %}Tasks Manager{% endblock %}
+{% block body %}
+    {% import 'macros.html.twig' as macros %}
+    <div class="container">
+        <h2>Tasks List</h2>
+        {% set baseUrl = ajax_task_base_url() %}
+        <div class="row margin-bottom20 border-bottom">
+            <div class="col-md-10">
+                {{ macros.renderSortButton('Username DESC', 'username.desc') }}
+                {{ macros.renderSortButton('Username ASC', 'username.asc') }}
+                {{ macros.renderSortButton('Email DESC', 'email.desc') }}
+                {{ macros.renderSortButton('Email ASC', 'email.asc') }}
+                {{ macros.renderSortButton('Status NEW', 'status.new') }}
+                {{ macros.renderSortButton('Status COMPLETED', 'status.completed') }}
+            </div>
+            <div class="col-md-2 text-right">
+                <a href="{{ baseUrl }}/task/create" class="btn btn-primary">Create new task</a>
+            </div>
+        </div>
+        {% for task in tasks %}
+            <div class="row description-task">
+                <div class="col-md-8">
+                    <div class="">{{ macros.renderStatusIcon(task) }}<p class="task-username">{{ task.username }}</p>{{ task.email }}</div>
+                    <div class="">{{ task.description }}</div>
+                </div>
+                <div class="col-md-4 text-right">
+                    <div class="task-thumbnail">{{ macros.renderTaskPicture(task) }}</div>
+                    {{ macros.renderEditTaskLink(task) }}
+                </div>
+            </div>
+        {% endfor %}
+        {% set paginationLinks = ajax_task_get_pagination_links(count, page, perPage) %}
+        <ul class="pagination">
+            {% for linkData in paginationLinks %}
+                <li>{{ macros.renderPaginationButton(linkData.link_show, linkData.link_id, params) }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block title %}Create Task{% endblock %}
+{% block body %}
+    <div class="container">
+        <h2>Create Task</h2>
+        <div class="row margin-bottom20 border-bottom">
+            <div class="col-md-10"></div>
+            <div class="col-md-2 text-right">
+                <a href="{{ ajax_task_base_url() }}/" class="btn btn-primary">Tasks List</a>
+            </div>
+        </div>
+        <div class="row margin-bottom20 border-bottom">
+            <div class="col-md-6 col-md-offset-3">
+                <form id="task-create-form" action="{{ ajax_task_base_url() }}/task/create" enctype="multipart/form-data" method="post">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input class="form-control" type="text" id="username" name="username" placeholder="Your username..">
+                        <label for="email">Email</label>
+                        <input class="form-control" type="text" id="email" name="email" placeholder="Your email..">
+                    </div>
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" name="description" placeholder="Description.."
+                              style="height:200px;resize: none;"></textarea>
+                    <br>
+                    <input class="form-control" type="file" name="picture" accept="image/png,image/jpeg,image/gif"
+                           id="task-create-file">
+                    <br>
+                    <input class="btn btn-success" type="submit" value="Submit">
+                    <a class="btn btn-primary float-right" id="task-pre-view-btn">Preview</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container" id="task-create-preview"></div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#task-pre-view-btn').on('click', function () {
+                var data = new FormData();
+                var username = $('#task-create-form input[name="username"]').val();
+                var email = $('#task-create-form input[name="email"]').val();
+                var description = $('#task-create-form textarea[name="description"]').val();
+                data.append('username', username);
+                data.append('email', email);
+                data.append('description', description);
+                $.each($('#task-create-file')[0].files, function(i, file) {
+                    data.append('file-'+i, file);
+                });
+                $.ajax({
+                    url: '/task/pre-view',
+                    data: data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    method: 'POST',
+                    type: 'POST', // For jQuery < 1.9
+                    success: function(data){
+                        $('#task-create-preview').html(data);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
